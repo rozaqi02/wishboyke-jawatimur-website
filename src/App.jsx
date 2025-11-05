@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Produk from "./pages/Produk";
 import Toko from "./pages/TokoWishBoyke";
 import Galeri from "./pages/Galeri";
-import Artiker from "./pages/Artiker";
+import Artikel from "./pages/Artikel";
 import Testimoni from "./pages/Testimoni";
 import Kontak from "./pages/Kontak";
 import AdminLogin from "./pages/admin/Login";
@@ -45,7 +45,7 @@ export default function App() {
             <Route path="/produk" element={<Page><Produk /></Page>} />
             <Route path="/toko" element={<Page><Toko /></Page>} />
             <Route path="/galeri" element={<Page><Galeri /></Page>} />
-            <Route path="/artiker" element={<Page><Artiker /></Page>} />
+            <Route path="/artikel" element={<Page><Artikel /></Page>} />
             <Route path="/testimoni" element={<Page><Testimoni /></Page>} />
             <Route path="/kontak" element={<Page><Kontak /></Page>} />
 
