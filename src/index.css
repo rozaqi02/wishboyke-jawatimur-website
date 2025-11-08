@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --- FIX: stabilkan lebar viewport agar navbar tidak geser saat scrollbar muncul/hilang --- */
+html { height: 100%; scrollbar-gutter: stable both-edges; }
+/* Fallback untuk browser lama yang belum support scrollbar-gutter */
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
+}
+
 /* ====== Theme ====== */
 :root { --header-h: 64px; }
 body { 
@@ -9,51 +16,69 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Font modern fresh, tanpa Google Fonts */
 }
 
-/* Container */
-.container { @apply mx-auto px-12; }
+/* Container - Responsive: Sempit di mobile (px-4), lebar di PC (md:px-12) */
+.container { @apply mx-auto px-5 md:px-12; }
 
-/* Buttons */
-.btn { @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-transparent transition; }
-.btn-primary { @apply bg-green-600 text-white hover:bg-green-700; }
-.btn-outline { @apply border border-neutral-300 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800; }
+/* Buttons - Enhanced for brand */
+.btn { @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-transparent transition-all duration-300 transform hover:scale-105; }
+.btn-primary { @apply bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl; }
+.btn-outline { @apply border-2 border-neutral-300 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800 backdrop-blur-sm; }
 
-/* Cards */
-.card { @apply rounded-2xl border border-neutral-200/70 dark:border-neutral-800/60 bg-white dark:bg-neutral-900 shadow-sm; }
+/* Cards - Softer shadows, adaptive */
+.card { 
+  @apply rounded-2xl border border-neutral-200/70 dark:border-neutral-800/60 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm shadow-sm; 
+}
+.card:hover { @apply border-neutral-300 dark:border-neutral-700; }
 .shadow-soft { box-shadow: 0 10px 30px -12px rgba(0,0,0,.25); }
 
-/* ====== Hero styles ====== */
+/* ====== Hero styles - Enhanced ====== */
 .hero {
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
+  min-height: 60vh;
 }
+
+/* Media query untuk responsive height (ganti md: prefix) */
+@media (min-width: 768px) {
+  .hero {
+    min-height: 80vh;
+  }
+}
+
 .hero__media {
   position:absolute; inset:0;
   background-position:center; background-size:cover;
   filter: saturate(1.05) contrast(1.02);
   transform: scale(1.05);
-  animation: kenburns 18s ease-in-out infinite alternate;
+  animation: kenburns 20s ease-in-out infinite alternate;
 }
 .hero__overlay {
   position:absolute; inset:0;
-  background: radial-gradient(80% 80% at 50% 30%, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.15) 40%, transparent 70%),
-              linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.55) 100%);
+  background: radial-gradient(80% 80% at 50% 30%, rgba(16,185,129,0.4) 0%, rgba(16,185,129,0.2) 40%, transparent 70%),
+              linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,.4) 60%, rgba(0,0,0,.6) 100%);
 }
 .hero__content {
   position:relative; z-index:1;
 }
 
-/* Ken Burns */
+/* Ken Burns - Slower for professionalism */
 @keyframes kenburns {
-  0%   { transform: scale(1.05) translate3d(0,0,0); }
-  100% { transform: scale(1.15) translate3d(0,-8px,0); }
+  0% { transform: scale(1.05) translate3d(0,0,0); }
+  100% { transform: scale(1.12) translate3d(0,-6px,0); }
 }
 
-/* Green accent text/link */
-a { @apply text-green-700; }
-a:hover { @apply text-green-800; }
+/* Green accent text/link - Adaptive */
+a { @apply text-green-700 dark:text-green-400 transition-colors; }
+a:hover { @apply text-green-800 dark:text-green-300; }
 
-/* Smooth theme transition - Tambahan untuk transisi mulus */
+/* Smooth theme transition */
 * {
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Responsive text sizing for mobile */
+@media (max-width: 768px) {
+  .hero__content h1 { @apply text-4xl !important; }
+  .hero__content p { @apply text-lg !important; }
 }
